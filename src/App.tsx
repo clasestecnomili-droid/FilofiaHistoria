@@ -51,12 +51,15 @@ const TIMELINE_EVENTS = [
   { year: '1910', label: 'Consolidación del Modernismo arquitectónico y artístico', color: '#2d6a4f', cat: 'Modernismo' },
 ]
 
-const QUIZ_QUESTIONS = [
+type QuizCat = 'Modernismo' | 'Positivismo' | 'Antipositivismo'
+
+const QUIZ_QUESTIONS: { q: string; opts: string[]; ans: number; exp: string; cat: QuizCat }[] = [
   {
     q: '¿Quién es considerado el fundador del Positivismo?',
     opts: ['Karl Marx', 'Auguste Comte', 'Friedrich Nietzsche', 'Rubén Darío'],
     ans: 1,
     exp: 'Auguste Comte (1798–1857) acuñó el término "positivismo" y formuló la Ley de los Tres Estados.',
+    cat: 'Positivismo',
   },
   {
     q: '¿Cuál es el principio central del Positivismo?',
@@ -68,18 +71,21 @@ const QUIZ_QUESTIONS = [
     ],
     ans: 1,
     exp: 'El positivismo sostiene que el único conocimiento auténtico es el científico, basado en hechos observables y verificables.',
+    cat: 'Positivismo',
   },
   {
     q: '¿Cuál de estos autores pertenece al Antipositivismo?',
     opts: ['Herbert Spencer', 'John Stuart Mill', 'Wilhelm Dilthey', 'Auguste Comte'],
     ans: 2,
     exp: 'Wilhelm Dilthey (1833–1911) fundó las "ciencias del espíritu" y criticó la aplicación del método científico a las ciencias humanas.',
+    cat: 'Antipositivismo',
   },
   {
     q: '¿Qué movimiento literario y artístico surgió como reacción al racionalismo y al cientificismo del siglo XIX?',
     opts: ['Realismo', 'Naturalismo', 'Modernismo', 'Ilustración'],
     ans: 2,
     exp: 'El Modernismo surgió como reacción al positivismo, valorando la estética, la subjetividad y la sensibilidad artística.',
+    cat: 'Modernismo',
   },
   {
     q: '¿Cuál es la "Ley de los Tres Estados" de Comte?',
@@ -91,6 +97,7 @@ const QUIZ_QUESTIONS = [
     ],
     ans: 1,
     exp: 'Comte propuso que la humanidad atraviesa tres estadios: teológico (mito), metafísico (razón abstracta) y positivo (ciencia).',
+    cat: 'Positivismo',
   },
   {
     q: '¿Qué caracteriza al Antipositivismo respecto al conocimiento social?',
@@ -102,6 +109,7 @@ const QUIZ_QUESTIONS = [
     ],
     ans: 1,
     exp: 'El antipositivismo, especialmente a través de Weber y Dilthey, propone la "comprensión" (Verstehen) como método propio de las ciencias humanas.',
+    cat: 'Antipositivismo',
   },
   {
     q: '¿Con qué frase se asocia popularmente el Modernismo en América Latina?',
@@ -113,6 +121,7 @@ const QUIZ_QUESTIONS = [
     ],
     ans: 2,
     exp: '"Arte por el arte" (L\'art pour l\'art) resume la búsqueda modernista de belleza pura e independencia artística respecto a fines utilitarios.',
+    cat: 'Modernismo',
   },
   {
     q: '¿Cuál es la principal crítica del Antipositivismo al Positivismo?',
@@ -124,6 +133,56 @@ const QUIZ_QUESTIONS = [
     ],
     ans: 1,
     exp: 'El antipositivismo sostiene que los fenómenos humanos tienen significado y contexto que no pueden reducirse a leyes naturales universales.',
+    cat: 'Antipositivismo',
+  },
+  {
+    q: '¿Qué obra de Rubén Darío marca el inicio del Modernismo literario latinoamericano?',
+    opts: ['"Prosas profanas"', '"Azul..."', '"Cantos de vida y esperanza"', '"El modernismo"'],
+    ans: 1,
+    exp: '"Azul..." (1888) es considerada la obra fundacional del Modernismo hispanoamericano por su renovación del lenguaje y las imágenes.',
+    cat: 'Modernismo',
+  },
+  {
+    q: '¿Qué recurso literario, típico del Modernismo, mezcla sensaciones de distintos sentidos?',
+    opts: ['La metáfora', 'La sinestesia', 'La hipérbole', 'El pleonasmo'],
+    ans: 1,
+    exp: 'La sinestesia ("escuchar colores", "ver sonidos") fue un recurso muy usado por los modernistas para lograr efectos sensoriales.',
+    cat: 'Modernismo',
+  },
+  {
+    q: '¿Qué sociólogo aplicó el método positivista al estudio del suicidio como hecho social?',
+    opts: ['Max Weber', 'Émile Durkheim', 'Wilhelm Dilthey', 'Henri Bergson'],
+    ans: 1,
+    exp: 'Émile Durkheim, en "El suicidio" (1897), trató los hechos sociales como cosas medibles y regidas por leyes, siguiendo el positivismo.',
+    cat: 'Positivismo',
+  },
+  {
+    q: 'El positivismo rechaza como fuente de conocimiento válido...',
+    opts: ['La observación', 'La experimentación', 'La metafísica', 'La medición'],
+    ans: 2,
+    exp: 'El positivismo descarta la metafísica y la teología porque sus afirmaciones no pueden verificarse empíricamente.',
+    cat: 'Positivismo',
+  },
+  {
+    q: '¿Qué concepto de Max Weber es un modelo puro que sirve para comparar fenómenos sociales reales?',
+    opts: ['El tipo ideal', 'El élan vital', 'La ley natural', 'El superhombre'],
+    ans: 0,
+    exp: 'El "tipo ideal" es una construcción conceptual de Weber que no describe la realidad exacta, sino que sirve como herramienta de comparación.',
+    cat: 'Antipositivismo',
+  },
+  {
+    q: '¿Qué filósofo antipositivista propuso el "élan vital" y criticó el mecanicismo?',
+    opts: ['Friedrich Nietzsche', 'Henri Bergson', 'Wilhelm Dilthey', 'Max Weber'],
+    ans: 1,
+    exp: 'Henri Bergson, desde el vitalismo, opuso el "impulso vital" (élan vital) a la visión mecanicista y determinista del positivismo.',
+    cat: 'Antipositivismo',
+  },
+  {
+    q: '¿Qué arquitecto es máximo exponente del Modernismo con la Sagrada Familia?',
+    opts: ['Gustav Klimt', 'Antonio Gaudí', 'José Martí', 'Herbert Spencer'],
+    ans: 1,
+    exp: 'Antonio Gaudí (1852–1926) llevó el modernismo a la arquitectura con formas orgánicas; la Sagrada Familia es su obra más célebre.',
+    cat: 'Modernismo',
   },
 ]
 
@@ -157,6 +216,39 @@ const COMPARATIVO = [
   { aspecto: 'Representantes', modernismo: 'Darío, Martí, Klimt, Gaudí', positivismo: 'Comte, Mill, Spencer, Durkheim', antipositivismo: 'Dilthey, Nietzsche, Weber, Bergson' },
 ]
 
+const PROFUNDIZACION: Record<'modernismo' | 'positivismo' | 'antipositivismo', {
+  datos: { titulo: string; texto: string }[]
+  cita: { texto: string; autor: string }
+}> = {
+  modernismo: {
+    datos: [
+      { titulo: 'Influencias francesas', texto: 'El Modernismo bebió del Parnasianismo (culto a la forma) y del Simbolismo (sugerencia y musicalidad) franceses, adaptándolos a la lengua española.' },
+      { titulo: 'Renovación del lenguaje', texto: 'Introdujo nuevos ritmos, versos alejandrinos, vocabulario refinado y abundante adjetivación cromática y sensorial.' },
+      { titulo: 'Temas recurrentes', texto: 'La mitología clásica, lo exótico y oriental, el cisne como símbolo de belleza, y el mundo aristocrático y elegante.' },
+      { titulo: 'Dos etapas', texto: 'Una primera etapa esteticista y evasiva ("Azul...", "Prosas profanas") y una segunda más reflexiva y americanista ("Cantos de vida y esperanza").' },
+    ],
+    cita: { texto: 'La palabra que hoy usamos con orgullo, "modernismo", nació como una etiqueta despectiva que los propios artistas transformaron en bandera.', autor: 'Sobre el término "Modernismo"' },
+  },
+  positivismo: {
+    datos: [
+      { titulo: 'Orden y progreso', texto: 'El lema positivista "Orden y progreso" resume su fe en que la ciencia y la organización racional conducen al avance de la humanidad.' },
+      { titulo: 'La sociología como ciencia', texto: 'Comte fundó la sociología (que llamó "física social") para estudiar la sociedad con el mismo rigor que las ciencias naturales.' },
+      { titulo: 'Impacto en América Latina', texto: 'El positivismo inspiró reformas educativas laicas, la modernización del Estado y proyectos políticos en México, Brasil y Argentina.' },
+      { titulo: 'Jerarquía de las ciencias', texto: 'Comte ordenó las ciencias de lo más simple a lo más complejo: matemática, astronomía, física, química, biología y sociología.' },
+    ],
+    cita: { texto: 'Saber para prever, prever para poder.', autor: 'Auguste Comte' },
+  },
+  antipositivismo: {
+    datos: [
+      { titulo: 'Explicar vs. comprender', texto: 'Dilthey distinguió "explicar" (erklären), propio de las ciencias naturales, de "comprender" (verstehen), propio de las ciencias del espíritu.' },
+      { titulo: 'El peso de la historia', texto: 'Para los antipositivistas, el ser humano es un ser histórico: no puede entenderse fuera de su cultura, su época y su horizonte de sentido.' },
+      { titulo: 'Acción social con sentido', texto: 'Weber definió la sociología como el estudio de la acción social, es decir, la conducta a la que los individuos asocian un significado subjetivo.' },
+      { titulo: 'Crítica a la objetividad', texto: 'Nietzsche cuestionó la pretensión de una verdad objetiva y neutral, mostrando que todo conocimiento parte de una perspectiva.' },
+    ],
+    cita: { texto: 'No hay hechos, solo interpretaciones.', autor: 'Friedrich Nietzsche' },
+  },
+}
+
 // ─── COMPONENTS ──────────────────────────────────────────────────────────────
 
 function Tag({ color, children }: { color: string; children: string }) {
@@ -186,6 +278,34 @@ function AuthorCard({ nombre, años, aporte, pais, color }: { nombre: string; a�
         </div>
       </div>
       <p className="text-sm text-[#4b5563] leading-relaxed">{aporte}</p>
+    </div>
+  )
+}
+
+function ProfundizacionBlock({ topic, color, bg }: { topic: 'modernismo' | 'positivismo' | 'antipositivismo'; color: string; bg: string }) {
+  const data = PROFUNDIZACION[topic]
+  return (
+    <div className="mt-12">
+      <h3 className="font-bold text-[#1e1e1e] text-xl mb-5" style={{ fontFamily: 'Playfair Display, serif' }}>Para profundizar</h3>
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        {data.datos.map((d) => (
+          <div key={d.titulo} className="bg-white border border-[#e2ddd6] rounded-2xl p-5" style={{ borderLeft: `3px solid ${color}` }}>
+            <h4 className="font-semibold text-[#1e1e1e] mb-1.5 text-sm">{d.titulo}</h4>
+            <p className="text-sm text-[#6b7280] leading-relaxed">{d.texto}</p>
+          </div>
+        ))}
+      </div>
+      <blockquote
+        className="rounded-2xl p-6 border-l-4"
+        style={{ backgroundColor: bg, borderColor: color }}
+      >
+        <p className="text-lg text-[#1e1e1e] italic leading-relaxed" style={{ fontFamily: 'Playfair Display, serif' }}>
+          &ldquo;{data.cita.texto}&rdquo;
+        </p>
+        <footer className="text-xs text-[#6b7280] mt-3" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          — {data.cita.autor}
+        </footer>
+      </blockquote>
     </div>
   )
 }
@@ -292,6 +412,8 @@ function ModernismoSection() {
             ))}
           </div>
         </div>
+
+        <ProfundizacionBlock topic="modernismo" color={color} bg="#f0f7f4" />
       </div>
     </section>
   )
@@ -384,6 +506,8 @@ function PositivismoSection() {
             ))}
           </div>
         </div>
+
+        <ProfundizacionBlock topic="positivismo" color={color} bg="#eef3f8" />
       </div>
     </section>
   )
@@ -465,7 +589,7 @@ function AntiPositivismoSection() {
           <h3 className="font-bold text-[#1e1e1e] text-lg mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>Ejemplos e influencias</h3>
           <div className="grid sm:grid-cols-3 gap-4">
             {[
-              { cat: 'Metodología', ej: 'Weber usó el "tipo ideal" para estudiar el capitalismo sin reducirlo a leyes naturales.' },
+              { cat: 'Metodolog��a', ej: 'Weber usó el "tipo ideal" para estudiar el capitalismo sin reducirlo a leyes naturales.' },
               { cat: 'Filosofía', ej: 'Nietzsche cuestionó radicalmente la objetividad científica en "La gaya ciencia" (1882).' },
               { cat: 'Hermenéutica', ej: 'La "Introducción a las ciencias del espíritu" de Dilthey (1883) fundó la metodología humanística.' },
             ].map((e) => (
@@ -476,6 +600,8 @@ function AntiPositivismoSection() {
             ))}
           </div>
         </div>
+
+        <ProfundizacionBlock topic="antipositivismo" color={color} bg="#f5eef8" />
       </div>
     </section>
   )
@@ -615,48 +741,93 @@ function ComparativoSection() {
 
 // ─── QUIZ ─────────────────────────────────────────────────────────────────────
 
+const QUIZ_TIME = 25 // segundos por pregunta
+const QUIZ_CATS: { label: 'Todas' | QuizCat; color: string }[] = [
+  { label: 'Todas', color: '#b87333' },
+  { label: 'Modernismo', color: '#2d6a4f' },
+  { label: 'Positivismo', color: '#1b3a5c' },
+  { label: 'Antipositivismo', color: '#7b2d8b' },
+]
+const CAT_COLORS: Record<QuizCat, string> = { Modernismo: '#2d6a4f', Positivismo: '#1b3a5c', Antipositivismo: '#7b2d8b' }
+
 function QuizSection() {
+  const [started, setStarted] = useState(false)
+  const [category, setCategory] = useState<'Todas' | QuizCat>('Todas')
+  const [questions, setQuestions] = useState<typeof QUIZ_QUESTIONS>([])
   const [current, setCurrent] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(QUIZ_QUESTIONS.length).fill(null))
+  const [answers, setAnswers] = useState<(number | null)[]>([])
   const [showResult, setShowResult] = useState(false)
   const [finished, setFinished] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(QUIZ_TIME)
 
-  const q = QUIZ_QUESTIONS[current]
-  const score = answers.filter((a, i) => a === QUIZ_QUESTIONS[i].ans).length
+  const q = questions[current]
+  const score = answers.filter((a, i) => questions[i] && a === questions[i].ans).length
+  const percent = questions.length ? Math.round((score / questions.length) * 100) : 0
 
-  const handleSelect = (idx: number) => {
+  const handleConfirm = (auto = false) => {
     if (showResult) return
-    setSelected(idx)
-  }
-
-  const handleConfirm = () => {
-    if (selected === null) return
-    const newAnswers = [...answers]
-    newAnswers[current] = selected
-    setAnswers(newAnswers)
+    if (!auto && selected === null) return
+    setAnswers((prev) => {
+      const next = [...prev]
+      next[current] = selected
+      return next
+    })
     setShowResult(true)
   }
 
+  // Temporizador por pregunta
+  useEffect(() => {
+    if (!started || finished || showResult) return
+    if (timeLeft <= 0) {
+      handleConfirm(true)
+      return
+    }
+    const t = setTimeout(() => setTimeLeft((s) => s - 1), 1000)
+    return () => clearTimeout(t)
+  }, [started, finished, showResult, timeLeft])
+
+  const startQuiz = () => {
+    const pool = category === 'Todas' ? QUIZ_QUESTIONS : QUIZ_QUESTIONS.filter((x) => x.cat === category)
+    const shuffled = [...pool].sort(() => Math.random() - 0.5)
+    setQuestions(shuffled)
+    setAnswers(Array(shuffled.length).fill(null))
+    setCurrent(0)
+    setSelected(null)
+    setShowResult(false)
+    setFinished(false)
+    setTimeLeft(QUIZ_TIME)
+    setStarted(true)
+  }
+
   const handleNext = () => {
-    if (current < QUIZ_QUESTIONS.length - 1) {
+    if (current < questions.length - 1) {
       setCurrent(current + 1)
       setSelected(null)
       setShowResult(false)
+      setTimeLeft(QUIZ_TIME)
     } else {
       setFinished(true)
     }
   }
 
   const handleReset = () => {
-    setCurrent(0)
-    setSelected(null)
-    setAnswers(Array(QUIZ_QUESTIONS.length).fill(null))
-    setShowResult(false)
+    setStarted(false)
     setFinished(false)
+    setQuestions([])
+    setAnswers([])
   }
 
-  const percent = Math.round((score / QUIZ_QUESTIONS.length) * 100)
+  // Desglose por categoría para la pantalla de resultados
+  const breakdown = (['Modernismo', 'Positivismo', 'Antipositivismo'] as QuizCat[])
+    .map((cat) => {
+      const idxs = questions.map((qq, i) => ({ qq, i })).filter(({ qq }) => qq.cat === cat)
+      const correct = idxs.filter(({ qq, i }) => answers[i] === qq.ans).length
+      return { cat, total: idxs.length, correct }
+    })
+    .filter((b) => b.total > 0)
+
+  const lowTime = timeLeft <= 5
 
   return (
     <section id="quiz" className="py-20 scroll-mt-16 bg-white">
@@ -672,25 +843,85 @@ function QuizSection() {
           Ponés a prueba tus conocimientos sobre Modernismo, Positivismo y Antipositivismo.
         </p>
 
-        {!finished ? (
+        {!started ? (
+          /* ── Pantalla de inicio ── */
+          <div className="bg-[#f7f5f0] rounded-2xl p-6 md:p-8">
+            <h3 className="text-xl font-bold text-[#1e1e1e] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+              Elegí una categoría
+            </h3>
+            <p className="text-sm text-[#6b7280] mb-6 leading-relaxed">
+              Cada pregunta tiene {QUIZ_TIME} segundos. Al terminar verás tu puntaje y el desglose por corriente.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-3 mb-8">
+              {QUIZ_CATS.map((c) => {
+                const count = c.label === 'Todas' ? QUIZ_QUESTIONS.length : QUIZ_QUESTIONS.filter((x) => x.cat === c.label).length
+                const activeC = category === c.label
+                return (
+                  <button
+                    key={c.label}
+                    onClick={() => setCategory(c.label)}
+                    className="text-left rounded-xl border px-4 py-3 transition-all flex items-center justify-between"
+                    style={{
+                      backgroundColor: activeC ? c.color : '#ffffff',
+                      borderColor: activeC ? c.color : '#e2ddd6',
+                      color: activeC ? '#ffffff' : '#1e1e1e',
+                    }}
+                  >
+                    <span className="text-sm font-semibold">{c.label}</span>
+                    <span
+                      className="text-xs px-2 py-0.5 rounded-full"
+                      style={{
+                        fontFamily: 'JetBrains Mono, monospace',
+                        backgroundColor: activeC ? 'rgba(255,255,255,0.2)' : c.color + '18',
+                        color: activeC ? '#ffffff' : c.color,
+                      }}
+                    >
+                      {count} preg.
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+            <button
+              onClick={startQuiz}
+              className="w-full sm:w-auto px-8 py-3 text-sm font-semibold rounded-xl bg-[#1b3a5c] text-white hover:bg-[#0f2640] transition-colors"
+            >
+              Comenzar quiz →
+            </button>
+          </div>
+        ) : !finished ? (
           <div>
-            {/* Progress */}
+            {/* Progress + timer */}
             <div className="flex items-center gap-3 mb-6">
               <div className="flex-1 h-1.5 bg-[#e2ddd6] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#b87333] rounded-full transition-all duration-500"
-                  style={{ width: `${((current) / QUIZ_QUESTIONS.length) * 100}%` }}
+                  style={{ width: `${(current / questions.length) * 100}%` }}
                 />
               </div>
               <span className="text-xs text-[#6b7280]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-                {current + 1} / {QUIZ_QUESTIONS.length}
+                {current + 1} / {questions.length}
+              </span>
+              <span
+                className="text-xs font-bold px-2.5 py-1 rounded-full transition-colors"
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  backgroundColor: showResult ? '#e2ddd6' : lowTime ? '#fee2e2' : '#f0e9dd',
+                  color: showResult ? '#6b7280' : lowTime ? '#dc2626' : '#b87333',
+                }}
+                aria-label={`Tiempo restante: ${timeLeft} segundos`}
+              >
+                {showResult ? '—' : `${timeLeft}s`}
               </span>
             </div>
 
             <div className="bg-[#f7f5f0] rounded-2xl p-6 md:p-8">
-              <p className="text-xs text-[#b87333] mb-4 font-semibold tracking-wider uppercase" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-                Pregunta {current + 1}
-              </p>
+              <div className="flex items-center gap-2 mb-4">
+                <p className="text-xs text-[#b87333] font-semibold tracking-wider uppercase" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                  Pregunta {current + 1}
+                </p>
+                <Tag color={CAT_COLORS[q.cat]}>{q.cat}</Tag>
+              </div>
               <h3 className="text-xl font-bold text-[#1e1e1e] mb-6 leading-snug" style={{ fontFamily: 'Playfair Display, serif' }}>
                 {q.q}
               </h3>
@@ -708,7 +939,7 @@ function QuizSection() {
                   return (
                     <button
                       key={i}
-                      onClick={() => handleSelect(i)}
+                      onClick={() => !showResult && setSelected(i)}
                       className={`w-full text-left rounded-xl border px-4 py-3 text-sm transition-all flex items-center gap-3 ${bg}`}
                     >
                       <span
@@ -725,7 +956,9 @@ function QuizSection() {
 
               {showResult && (
                 <div className="bg-white border border-[#e2ddd6] rounded-xl px-4 py-3 mb-4">
-                  <p className="text-xs font-semibold text-[#b87333] mb-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Explicación</p>
+                  <p className="text-xs font-semibold text-[#b87333] mb-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    {selected === null ? 'Se agotó el tiempo' : selected === q.ans ? '¡Correcto!' : 'Respuesta incorrecta'}
+                  </p>
                   <p className="text-sm text-[#374151] leading-relaxed">{q.exp}</p>
                 </div>
               )}
@@ -733,7 +966,7 @@ function QuizSection() {
               <div className="flex justify-end gap-3">
                 {!showResult ? (
                   <button
-                    onClick={handleConfirm}
+                    onClick={() => handleConfirm()}
                     disabled={selected === null}
                     className="px-6 py-2.5 text-sm font-semibold rounded-xl bg-[#1b3a5c] text-white disabled:opacity-40 hover:bg-[#0f2640] transition-colors"
                   >
@@ -744,7 +977,7 @@ function QuizSection() {
                     onClick={handleNext}
                     className="px-6 py-2.5 text-sm font-semibold rounded-xl bg-[#1b3a5c] text-white hover:bg-[#0f2640] transition-colors"
                   >
-                    {current < QUIZ_QUESTIONS.length - 1 ? 'Siguiente pregunta →' : 'Ver resultado final'}
+                    {current < questions.length - 1 ? 'Siguiente pregunta →' : 'Ver resultado final'}
                   </button>
                 )}
               </div>
@@ -764,14 +997,36 @@ function QuizSection() {
               {percent >= 80 ? '¡Excelente resultado!' : percent >= 60 ? 'Buen trabajo' : 'Seguí estudiando'}
             </h3>
             <p className="text-[#6b7280] mb-6">
-              Respondiste correctamente <strong>{score}</strong> de <strong>{QUIZ_QUESTIONS.length}</strong> preguntas.
+              Respondiste correctamente <strong>{score}</strong> de <strong>{questions.length}</strong> preguntas.
             </p>
-            <div className="grid grid-cols-8 gap-1 max-w-xs mx-auto mb-8">
-              {QUIZ_QUESTIONS.map((q, i) => (
+
+            {breakdown.length > 1 && (
+              <div className="max-w-sm mx-auto mb-8 space-y-3 text-left">
+                {breakdown.map((b) => (
+                  <div key={b.cat}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold text-[#1e1e1e]">{b.cat}</span>
+                      <span className="text-xs text-[#6b7280]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                        {b.correct}/{b.total}
+                      </span>
+                    </div>
+                    <div className="h-2 bg-[#e2ddd6] rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-700"
+                        style={{ width: `${(b.correct / b.total) * 100}%`, backgroundColor: CAT_COLORS[b.cat] }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex flex-wrap justify-center gap-1 max-w-xs mx-auto mb-8">
+              {questions.map((qq, i) => (
                 <div
                   key={i}
-                  className="h-2 rounded-full"
-                  style={{ backgroundColor: answers[i] === q.ans ? '#16a34a' : '#dc2626' }}
+                  className="h-2 w-6 rounded-full"
+                  style={{ backgroundColor: answers[i] === qq.ans ? '#16a34a' : '#dc2626' }}
                 />
               ))}
             </div>
@@ -779,7 +1034,7 @@ function QuizSection() {
               onClick={handleReset}
               className="px-8 py-3 text-sm font-semibold rounded-xl bg-[#1b3a5c] text-white hover:bg-[#0f2640] transition-colors"
             >
-              Reiniciar quiz
+              Volver a empezar
             </button>
           </div>
         )}
