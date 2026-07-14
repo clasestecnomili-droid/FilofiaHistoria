@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 
-type Section = 'inicio' | 'modernismo' | 'positivismo' | 'antipositivismo' | 'linea' | 'comparativo' | 'quiz'
+type Section = 'inicio' | 'modernismo' | 'positivismo' | 'antipositivismo' | 'linea' | 'comparativo' | 'glosario' | 'quiz'
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 
@@ -13,7 +13,29 @@ const NAV_ITEMS: { id: Section; label: string }[] = [
   { id: 'antipositivismo', label: 'Antipositivismo' },
   { id: 'linea', label: 'Línea de tiempo' },
   { id: 'comparativo', label: 'Comparativo' },
+  { id: 'glosario', label: 'Glosario' },
   { id: 'quiz', label: 'Quiz' },
+]
+
+const GLOSARIO: { termino: string; definicion: string; cat: 'Modernismo' | 'Positivismo' | 'Antipositivismo' | 'General'; color: string }[] = [
+  { termino: 'Positivismo', definicion: 'Corriente filosófica que sostiene que el único conocimiento válido es el científico, basado en la observación y la verificación empírica de los hechos.', cat: 'Positivismo', color: '#1b3a5c' },
+  { termino: 'Ley de los Tres Estados', definicion: 'Teoría de Auguste Comte según la cual el pensamiento humano evoluciona por tres etapas: teológica, metafísica y positiva.', cat: 'Positivismo', color: '#1b3a5c' },
+  { termino: 'Empirismo', definicion: 'Doctrina que afirma que todo conocimiento proviene de la experiencia sensible y la observación, rechazando las ideas innatas.', cat: 'Positivismo', color: '#1b3a5c' },
+  { termino: 'Determinismo', definicion: 'Idea de que todos los fenómenos, naturales y sociales, están regidos por leyes fijas y relaciones de causa-efecto.', cat: 'Positivismo', color: '#1b3a5c' },
+  { termino: 'Cientificismo', definicion: 'Postura que considera al método científico como la única vía legítima de conocimiento, aplicable a todos los ámbitos del saber.', cat: 'Positivismo', color: '#1b3a5c' },
+  { termino: 'Modernismo', definicion: 'Movimiento artístico y literario de fines del siglo XIX que buscó la renovación estética y la belleza, en ruptura con el academicismo.', cat: 'Modernismo', color: '#2d6a4f' },
+  { termino: 'Esteticismo', definicion: 'Doctrina que eleva la belleza a valor supremo, resumida en la fórmula "el arte por el arte" (L\'art pour l\'art).', cat: 'Modernismo', color: '#2d6a4f' },
+  { termino: 'Simbolismo', definicion: 'Corriente que emplea símbolos, sinestesias y musicalidad para sugerir ideas y estados de ánimo en lugar de describirlos literalmente.', cat: 'Modernismo', color: '#2d6a4f' },
+  { termino: 'Cosmopolitismo', definicion: 'Actitud modernista de apertura y admiración hacia culturas foráneas, en especial la francesa y la oriental.', cat: 'Modernismo', color: '#2d6a4f' },
+  { termino: 'Sinestesia', definicion: 'Recurso literario que mezcla sensaciones de sentidos distintos, como "escuchar colores" o "ver sonidos".', cat: 'Modernismo', color: '#2d6a4f' },
+  { termino: 'Antipositivismo', definicion: 'Reacción filosófica que rechaza aplicar el método de las ciencias naturales al estudio de los fenómenos humanos e históricos.', cat: 'Antipositivismo', color: '#7b2d8b' },
+  { termino: 'Verstehen', definicion: 'Término alemán ("comprensión") que designa el método interpretativo propio de las ciencias humanas, frente a la explicación causal.', cat: 'Antipositivismo', color: '#7b2d8b' },
+  { termino: 'Hermenéutica', definicion: 'Disciplina que estudia la interpretación de textos, símbolos y acciones humanas para captar su sentido y contexto.', cat: 'Antipositivismo', color: '#7b2d8b' },
+  { termino: 'Ciencias del espíritu', definicion: 'Concepto de Wilhelm Dilthey para las disciplinas que estudian la vida humana (historia, arte, cultura) con un método propio.', cat: 'Antipositivismo', color: '#7b2d8b' },
+  { termino: 'Tipo ideal', definicion: 'Herramienta metodológica de Max Weber: un modelo conceptual puro que sirve para comparar y comprender fenómenos sociales reales.', cat: 'Antipositivismo', color: '#7b2d8b' },
+  { termino: 'Metafísica', definicion: 'Rama de la filosofía que estudia la naturaleza última de la realidad; el positivismo la rechaza por no ser verificable.', cat: 'General', color: '#b87333' },
+  { termino: 'Epistemología', definicion: 'Estudio filosófico del conocimiento: su origen, alcance, validez y límites.', cat: 'General', color: '#b87333' },
+  { termino: 'Subjetividad', definicion: 'Perspectiva individual, interior y personal desde la que se experimenta y valora la realidad.', cat: 'General', color: '#b87333' },
 ]
 
 const TIMELINE_EVENTS = [
@@ -766,6 +788,111 @@ function QuizSection() {
   )
 }
 
+// ─── GLOSARIO ─────────────────────────────────────────────────────────────────
+
+function GlosarioSection() {
+  const [query, setQuery] = useState('')
+  const [filter, setFilter] = useState<'Todos' | 'Modernismo' | 'Positivismo' | 'Antipositivismo' | 'General'>('Todos')
+
+  const filters: { label: 'Todos' | 'Modernismo' | 'Positivismo' | 'Antipositivismo' | 'General'; color: string }[] = [
+    { label: 'Todos', color: '#1e1e1e' },
+    { label: 'Modernismo', color: '#2d6a4f' },
+    { label: 'Positivismo', color: '#1b3a5c' },
+    { label: 'Antipositivismo', color: '#7b2d8b' },
+    { label: 'General', color: '#b87333' },
+  ]
+
+  const q = query.trim().toLowerCase()
+  const results = GLOSARIO.filter((item) => {
+    const matchesFilter = filter === 'Todos' || item.cat === filter
+    const matchesQuery = q === '' || item.termino.toLowerCase().includes(q) || item.definicion.toLowerCase().includes(q)
+    return matchesFilter && matchesQuery
+  }).sort((a, b) => a.termino.localeCompare(b.termino, 'es'))
+
+  return (
+    <section id="glosario" className="py-20 scroll-mt-16 bg-white">
+      <div className="max-w-5xl mx-auto px-4 md:px-8">
+        <SectionBadge label="Términos clave" color="#b87333" />
+        <h2
+          className="text-4xl md:text-5xl font-bold text-[#1e1e1e] mt-4 mb-3"
+          style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '-0.01em' }}
+        >
+          Glosario
+        </h2>
+        <p className="text-lg text-[#6b7280] max-w-2xl mb-8 leading-relaxed">
+          Consultá los conceptos fundamentales de las tres corrientes. Buscá por término o filtrá por corriente.
+        </p>
+
+        {/* Buscador */}
+        <div className="relative mb-5">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6b7280] text-sm">🔍</span>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Buscar un término o definición…"
+            aria-label="Buscar en el glosario"
+            className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#e2ddd6] bg-[#f7f5f0] text-sm text-[#1e1e1e] placeholder:text-[#9ca3af] focus:outline-none focus:border-[#b87333] focus:ring-2 focus:ring-[#b87333]/20 transition-all"
+          />
+        </div>
+
+        {/* Filtros */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {filters.map((f) => {
+            const activeF = filter === f.label
+            return (
+              <button
+                key={f.label}
+                onClick={() => setFilter(f.label)}
+                className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all"
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  backgroundColor: activeF ? f.color : f.color + '12',
+                  color: activeF ? '#ffffff' : f.color,
+                  border: `1px solid ${f.color}${activeF ? '' : '30'}`,
+                }}
+              >
+                {f.label}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Resultados */}
+        {results.length > 0 ? (
+          <div className="grid sm:grid-cols-2 gap-4">
+            {results.map((item) => (
+              <div
+                key={item.termino}
+                className="bg-white border border-[#e2ddd6] rounded-2xl p-5 hover:shadow-md transition-shadow"
+                style={{ borderLeft: `3px solid ${item.color}` }}
+              >
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-[#1e1e1e] text-base" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    {item.termino}
+                  </h3>
+                  <Tag color={item.color}>{item.cat}</Tag>
+                </div>
+                <p className="text-sm text-[#4b5563] leading-relaxed">{item.definicion}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 border border-dashed border-[#e2ddd6] rounded-2xl">
+            <p className="text-[#6b7280] text-sm">
+              No se encontraron términos para <strong className="text-[#1e1e1e]">&ldquo;{query}&rdquo;</strong>.
+            </p>
+          </div>
+        )}
+
+        <p className="text-xs text-[#9ca3af] mt-6" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          {results.length} de {GLOSARIO.length} términos
+        </p>
+      </div>
+    </section>
+  )
+}
+
 // ─── NAV ──────────────────────────────────────────────────────────────────────
 
 function Nav() {
@@ -990,6 +1117,7 @@ export default function App() {
         <AntiPositivismoSection />
         <TimelineSection />
         <ComparativoSection />
+        <GlosarioSection />
         <QuizSection />
       </main>
       <Footer />
